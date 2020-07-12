@@ -1,6 +1,7 @@
 package tonello.estoque.filter;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import tonello.estoque.db.DBManager;
 import tonello.estoque.modelos.Usuario;
 
 @WebFilter(urlPatterns = {
@@ -30,6 +32,15 @@ public class Filtro implements Filter {
 			return;
 		}
 		chain.doFilter(request, response);
+	}
+	
+	@Override
+	public void destroy() {
+		try {
+			DBManager.getConexao().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
