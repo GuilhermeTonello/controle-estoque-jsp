@@ -20,6 +20,7 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().removeAttribute("logado");
+		req.getSession().invalidate();
 		req.getRequestDispatcher("index.jsp").forward(req, resp);
 	}
 	
