@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,6 +40,13 @@
 							</div>
 						</div>
 					</form>
+					<c:if test="${loginInvalido}">
+						<div class="container">
+							<div class="alert alert-danger mt-3 mb-3">
+								<p>Logine e/ou senha inválido(s), verifique suas credenciais.</p>
+							</div>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
