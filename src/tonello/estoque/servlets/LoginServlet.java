@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
 		if (usuarioDao.autenticar(usuario)) {
-			request.removeAttribute("login-invalido");
+			request.removeAttribute("loginInvalido");
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpSession session = req.getSession();
 			session.setAttribute("logado", usuario);

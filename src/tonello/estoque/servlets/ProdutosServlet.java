@@ -37,7 +37,7 @@ public class ProdutosServlet extends HttpServlet {
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
 			System.out.println("editar");
 		} else {
-			request.getRequestDispatcher("produtos-pages/produtos-index.jsp").forward(request, response);
+			request.getRequestDispatcher("sistemas/produtos-pages/produtos-index.jsp").forward(request, response);
 		}
 	}
 

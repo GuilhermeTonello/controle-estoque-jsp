@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/custom.css" type="text/css" />
 	</head>
 	<body>
-		<%@ include file="../resources/layouts/cabecalho.jsp" %>
+		<%@ include file="../../resources/layouts/cabecalho.jsp" %>
 		<div class="container">
 			<h1>Listagem de produtos</h1>
 			<table class="table table-hover table-bordered">
@@ -49,6 +49,6 @@
 				</tbody>
 			</table>
 		</div>
-		<%@ include file="../resources/layouts/rodape.html" %>
+		<%@ include file="../../resources/layouts/rodape.html" %>
 	</body>
 </html>

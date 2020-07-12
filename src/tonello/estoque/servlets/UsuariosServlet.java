@@ -37,7 +37,7 @@ public class UsuariosServlet extends HttpServlet {
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
 			System.out.println("editar");
 		} else {
-			request.getRequestDispatcher("usuarios-pages/usuarios-index.jsp").forward(request, response);
+			request.getRequestDispatcher("sistemas/usuarios-pages/usuarios-index.jsp").forward(request, response);
 		}
 	}
 

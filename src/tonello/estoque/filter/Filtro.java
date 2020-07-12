@@ -16,8 +16,8 @@ import tonello.estoque.db.DBManager;
 import tonello.estoque.modelos.Usuario;
 
 @WebFilter(urlPatterns = {
-		"/layouts/cabecalho.jsp", "/produtos-pages/*",
-		"/usuarios-pages/*", "/produtos/*", "/usuarios/*"
+		"/layouts/*", "/sistemas/*",
+		"/produtos/*", "/usuarios/*"
 })
 public class Filtro implements Filter {
 
