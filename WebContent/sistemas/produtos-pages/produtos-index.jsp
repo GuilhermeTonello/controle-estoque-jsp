@@ -15,6 +15,11 @@
 		<%@ include file="../../resources/layouts/cabecalho.jsp" %>
 		<div class="container">
 			<h1>Listagem de produtos</h1>
+			<c:if test="${erro != null && !erro.isEmpty()}">
+				<div class="alert alert-danger">
+					${erro}
+				</div>
+			</c:if>
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
@@ -28,24 +33,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Sabão em pó</td>
-						<td>Limpa tudo bem rápido</td>
-						<td>75</td>
-						<td>3,99</td>
-						<td><a href="produtos?acao=ver&id=1" rel="noopener noreferrer"><span class="glyphicon glyphicon-search"></span></a></td>
-						<td><a href="produtos?acao=deletar&id=1" rel="noopener noreferrer"><span class="glyphicon glyphicon-trash"></span></a></td>
-						<td><a href="produtos?acao=editar&id=1" rel="noopener noreferrer"><span class="glyphicon glyphicon-pencil"></span></a></td>
-					</tr>
-					<tr>
-						<td>Geladeira</td>
-						<td>Freezer incluído</td>
-						<td>20</td>
-						<td>1499,99</td>
-						<td><a href="produtos?acao=ver&id=2" rel="noopener noreferrer"><span class="glyphicon glyphicon-search"></span></a></td>
-						<td><a href="produtos?acao=deletar&id=2" rel="noopener noreferrer"><span class="glyphicon glyphicon-trash"></span></a></td>
-						<td><a href="produtos?acao=editar&id=2" rel="noopener noreferrer"><span class="glyphicon glyphicon-pencil"></span></a></td>
-					</tr>
+					<c:forEach items="${produtos}" var="produto">
+						<tr>
+							<td>${produto.nome}</td>
+							<td>${produto.descricao}</td>
+							<td>${produto.quantidade}</td>
+							<td>${produto.valor}</td>
+							<td>
+								<a href="produtos?acao=ver&id=${produto.id}" rel="noopener noreferrer">
+								<span class="glyphicon glyphicon-search"></span>
+								</a>
+							</td>
+							<td>
+								<a href="produtos?acao=deletar&id=${produto.id}" onclick="return confirm('Deseja mesmo excluir o produto ${produto.nome}')" rel="noopener noreferrer">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+							</td>
+							<td>
+								<a href="produtos?acao=editar&id=${produto.id}" rel="noopener noreferrer">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
