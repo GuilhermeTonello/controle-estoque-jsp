@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import tonello.estoque.daos.UsuarioDao;
+
 @WebServlet("/usuarios")
 public class UsuariosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	private UsuarioDao usuarioDao = new UsuarioDao();
 
 	public UsuariosServlet() {
 		super();
@@ -30,15 +34,18 @@ public class UsuariosServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		if (acao != null && !acao.isEmpty() && acao.equals("adicionar")) {
 			System.out.println("adicionar");
-		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("ver")) {
-			System.out.println("ver");
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("deletar")) {
 			System.out.println("deletar");
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
 			System.out.println("editar");
 		} else {
-			request.getRequestDispatcher("sistemas/usuarios-pages/usuarios-index.jsp").forward(request, response);
+			listar(request, response);
 		}
+	}
+	
+	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("usuarios", usuarioDao.listar());
+		request.getRequestDispatcher("sistemas/usuarios-pages/usuarios-index.jsp").forward(request, response);
 	}
 
 }
