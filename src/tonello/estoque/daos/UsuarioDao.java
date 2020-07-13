@@ -119,10 +119,10 @@ public class UsuarioDao implements Dao<Usuario> {
 
 	@Override
 	public Usuario consultarPorId(long id) {
-		String sql = "SELECT * FROM produtos WHERE id = ?";
-		try (PreparedStatement ps = conexao.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery()) {
+		String sql = "SELECT * FROM usuarios WHERE id = ?";
+		try (PreparedStatement ps = conexao.prepareStatement(sql)) {
 			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				Usuario usuarioEncontrado = new Usuario();
 				usuarioEncontrado.setId(rs.getLong("id"));
@@ -131,6 +131,7 @@ public class UsuarioDao implements Dao<Usuario> {
 				usuarioEncontrado.setSenha(rs.getString("senha"));
 				return usuarioEncontrado;
 			}
+			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,7 +140,7 @@ public class UsuarioDao implements Dao<Usuario> {
 	
 	@Override
 	public boolean validar(String t) {
-		String sql = "SELECT COUNT(1) AS qtd FROM usuario WHERE login = ?";
+		String sql = "SELECT COUNT(1) AS qtd FROM usuarios WHERE login = ?";
 		try (PreparedStatement ps = conexao.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()) {
 			ps.setString(1, t);
