@@ -12,6 +12,12 @@ public interface Dao<T> {
 	
 	public List<T> listar();
 	
-	public T consultar(long id);
+	public List<T> listar(String nome);
+	
+	public T consultarPorId(long id);
+
+	public List<T> consultarTudo(String sql);
+	
+	public boolean validar(String t);
 	
 }
