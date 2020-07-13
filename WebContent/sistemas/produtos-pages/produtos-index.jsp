@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,6 +17,11 @@
 			<c:if test="${erro != null && !erro.isEmpty()}">
 				<div class="alert alert-danger">
 					${erro}
+				</div>
+			</c:if>
+			<c:if test="${sucesso != null && !sucesso.isEmpty()}">
+				<div class="alert alert-success">
+					${sucesso}
 				</div>
 			</c:if>
 			<table class="table table-hover table-bordered">
