@@ -137,11 +137,12 @@ public class ProdutoDao implements Dao<Produto> {
 
 	@Override
 	public boolean validar(String t) {
-		String sql = "SELECT COUNT(1) AS qtd FROM usuario WHERE nome = ?";
-		try (PreparedStatement ps = conexao.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery()) {
+		String sql = "SELECT COUNT(1) AS qtd FROM produtos WHERE nome = ?";
+		try (PreparedStatement ps = conexao.prepareStatement(sql)) {
 			ps.setString(1, t);
-			return rs.getInt("qtd") <= 0;
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+				return rs.getInt("qtd") <= 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
