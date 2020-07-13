@@ -25,7 +25,47 @@ public class ProdutosServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("adicionando/editando produto");
+		String id = request.getParameter("id");
+		String nome = request.getParameter("nome");
+		String descricao = request.getParameter("descricao");
+		String quantidade = request.getParameter("quantidade");
+		String valor = request.getParameter("valor");
+		
+		try {
+			Produto produto = new Produto();
+			if (id != null && !id.isEmpty())
+				produto.setId(Long.parseLong(id));
+			produto.setNome(nome);
+			produto.setDescricao(descricao);
+			
+			if (quantidade != null && !quantidade.isEmpty())
+				produto.setQuantidade(Integer.parseInt(quantidade));
+			if (valor != null && !valor.isEmpty())
+				produto.setValor(Double.parseDouble(valor.replace(',', '.')));
+			if (nome == null || nome.isEmpty() 
+					|| descricao == null || descricao.isEmpty()
+					|| quantidade == null || quantidade.isEmpty()
+					|| valor == null || valor.isEmpty()) {
+				voltarFormProduto(request, response, "null-input");
+			} else {
+				if (produtoDao.validar(produto.getNome())) {
+					String mensagem;
+					if (id == null || id.isEmpty()) {
+						produtoDao.adicionar(produto);
+						mensagem = "Produto " + produto.getNome() + " adicionado com sucesso.";
+					} else {
+						produtoDao.atualizar(produto);
+						mensagem = "Produto " + produto.getNome() + " editado com sucesso.";
+					}
+					request.setAttribute("sucesso", mensagem);
+					listar(request, response);
+				} else {
+					voltarFormProduto(request, response, "ja-existe");
+				}
+			}
+		} catch (Exception e) {
+			voltarFormProduto(request, response, "no-numeric");
+		}
 	}
 
 	@Override
@@ -45,7 +85,15 @@ public class ProdutosServlet extends HttpServlet {
 				listar(request, response);
 			}
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("deletar")) {
-			System.out.println("deletar");
+			Produto produtoEscolhido = produtoDao.consultarPorId(Long.parseLong(id));
+			if (produtoEscolhido != null) {
+				request.setAttribute("sucesso", "Produto " + produtoEscolhido.getNome() + " deletado com sucesso");
+				produtoDao.deletar(Long.parseLong(id));
+				listar(request, response);
+			} else {
+				request.setAttribute("erro", "Esse produto não existe.");
+				listar(request, response);
+			}
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
 			Produto produtoEscolhido = produtoDao.consultarPorId(Long.parseLong(id));
 			if (produtoEscolhido != null) {
@@ -63,6 +111,14 @@ public class ProdutosServlet extends HttpServlet {
 	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("produtos", produtoDao.listar());
 		request.getRequestDispatcher("sistemas/produtos-pages/produtos-index.jsp").forward(request, response);
+	}
+	
+	private void voltarFormProduto(HttpServletRequest request, HttpServletResponse response, String erro) throws ServletException, IOException {
+		if (request.getParameter("id") == null || request.getParameter("id").isEmpty()) {
+			response.sendRedirect("produtos?acao=adicionar&erro=" + erro);
+		} else {
+			response.sendRedirect("produtos?acao=editar&id=" + request.getParameter("id") + "&erro=" + erro);
+		}
 	}
 
 }
