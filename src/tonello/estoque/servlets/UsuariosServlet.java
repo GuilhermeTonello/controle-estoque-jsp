@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tonello.estoque.daos.UsuarioDao;
+import tonello.estoque.modelos.Usuario;
 
 @WebServlet("/usuarios")
 public class UsuariosServlet extends HttpServlet {
@@ -24,7 +25,7 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		System.out.println("adicionando/editando usuário");
 	}
 
 	@Override
@@ -33,11 +34,18 @@ public class UsuariosServlet extends HttpServlet {
 		String acao = request.getParameter("acao");
 		String id = request.getParameter("id");
 		if (acao != null && !acao.isEmpty() && acao.equals("adicionar")) {
-			System.out.println("adicionar");
+			request.getRequestDispatcher("sistemas/usuarios-pages/form-usuario.jsp").forward(request, response);
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("deletar")) {
 			System.out.println("deletar");
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
-			System.out.println("editar");
+			Usuario usuarioEscolhido = usuarioDao.consultarPorId(Long.parseLong(id));
+			if (usuarioEscolhido != null) {
+				request.setAttribute("usuario", usuarioEscolhido);
+				request.getRequestDispatcher("sistemas/usuarios-pages/form-usuario.jsp").forward(request, response);
+			} else {
+				request.setAttribute("erro", "Esse produto não existe.");
+				listar(request, response);
+			}
 		} else {
 			listar(request, response);
 		}

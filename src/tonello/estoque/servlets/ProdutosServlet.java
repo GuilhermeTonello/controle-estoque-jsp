@@ -25,7 +25,7 @@ public class ProdutosServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		System.out.println("adicionando/editando produto");
 	}
 
 	@Override
@@ -34,12 +34,12 @@ public class ProdutosServlet extends HttpServlet {
 		String acao = request.getParameter("acao");
 		String id = request.getParameter("id");
 		if (acao != null && !acao.isEmpty() && acao.equals("adicionar")) {
-			System.out.println("adicionar");
+			request.getRequestDispatcher("sistemas/produtos-pages/form-produto.jsp").forward(request, response);
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("ver")) {
 			Produto produtoEscolhido = produtoDao.consultarPorId(Long.parseLong(id));
 			if (produtoEscolhido != null) {
 				request.setAttribute("produtoEscolhido", produtoEscolhido);
-				request.getRequestDispatcher("sistemas/produtos-pages/mostrar-produto.jsp").forward(request, response);;
+				request.getRequestDispatcher("sistemas/produtos-pages/mostrar-produto.jsp").forward(request, response);
 			} else {
 				request.setAttribute("erro", "Esse produto não existe.");
 				listar(request, response);
@@ -47,7 +47,14 @@ public class ProdutosServlet extends HttpServlet {
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("deletar")) {
 			System.out.println("deletar");
 		} else if (acao != null && !acao.isEmpty() && id != null && !id.isEmpty() && acao.equals("editar")) {
-			System.out.println("editar");
+			Produto produtoEscolhido = produtoDao.consultarPorId(Long.parseLong(id));
+			if (produtoEscolhido != null) {
+				request.setAttribute("produto", produtoEscolhido);
+				request.getRequestDispatcher("sistemas/produtos-pages/form-produto.jsp").forward(request, response);
+			} else {
+				request.setAttribute("erro", "Esse produto não existe.");
+				listar(request, response);
+			}
 		} else {
 			listar(request, response);
 		}
