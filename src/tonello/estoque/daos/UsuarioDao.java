@@ -141,10 +141,11 @@ public class UsuarioDao implements Dao<Usuario> {
 	@Override
 	public boolean validar(String t) {
 		String sql = "SELECT COUNT(1) AS qtd FROM usuarios WHERE login = ?";
-		try (PreparedStatement ps = conexao.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery()) {
+		try (PreparedStatement ps = conexao.prepareStatement(sql)) {
 			ps.setString(1, t);
-			return rs.getInt("qtd") <= 0;
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt("qtd") <= 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
