@@ -13,6 +13,16 @@
 	<body>
 		<%@ include file="../../resources/layouts/cabecalho.jsp" %>
 		<div class="container">
+			<c:if test="<%= request.getParameter(\"erro\") != null && !request.getParameter(\"erro\").trim().isEmpty() %>">
+				<div class="alert alert-danger">
+					<c:if test="<%= request.getParameter(\"erro\").equals(\"null-input\") %>">
+						Algum(ns) campo(s) está(ão) vazio(s).
+					</c:if>
+					<c:if test="<%= request.getParameter(\"erro\").equals(\"ja-existe\") %>">
+						Esse usuário já existe.
+					</c:if>
+				</div>
+			</c:if>
 			<c:if test="<%= request.getParameter(\"acao\").equals(\"adicionar\") %>">
 				<h1>Novo usuário</h1>
 			</c:if>

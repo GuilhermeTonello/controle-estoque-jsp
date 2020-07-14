@@ -19,6 +19,11 @@
 					${erro}
 				</div>
 			</c:if>
+			<c:if test="${sucesso != null && !sucesso.isEmpty()}">
+				<div class="alert alert-success">
+					${sucesso}
+				</div>
+			</c:if>
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>
