@@ -20,4 +20,6 @@ public interface Dao<T> {
 	
 	public boolean validar(String t);
 	
+	public boolean validarUpdate(String t, long id);
+	
 }

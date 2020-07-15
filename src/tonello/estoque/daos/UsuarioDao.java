@@ -152,6 +152,21 @@ public class UsuarioDao implements Dao<Usuario> {
 		return false;
 	}
 	
+	@Override
+	public boolean validarUpdate(String t, long id) {
+		String sql = "SELECT COUNT(1) AS qtd FROM usuarios WHERE login = ? AND id <> ?";
+		try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+			ps.setString(1, t);
+			ps.setLong(2, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt("qtd") <= 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public boolean autenticar(Usuario t) {
 		String sql = "SELECT login, senha FROM administradores WHERE login = ? AND senha = ?";
 		try (PreparedStatement ps = conexao.prepareStatement(sql)) {
