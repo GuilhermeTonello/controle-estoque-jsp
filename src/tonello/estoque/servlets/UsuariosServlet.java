@@ -42,17 +42,21 @@ public class UsuariosServlet extends HttpServlet {
 				|| senha == null || senha.isEmpty()) {
 			voltarFormUsuario(request, response, "null-input");
 		} else {
-			if (usuarioDao.validar(usuario.getLogin())) {
-				String mensagem;
-				if (id == null || id.isEmpty()) {
-					usuarioDao.adicionar(usuario);
-					mensagem = "Usuário " + usuario.getNome() + " adicionado com sucesso.";
-				} else {
-					usuarioDao.atualizar(usuario);
-					mensagem = "Usuário " + usuario.getNome() + " editado com sucesso.";
-				}
+			String mensagem;
+			if (id == null || id.isEmpty() && usuarioDao.validar(usuario.getLogin())) {
+				usuarioDao.adicionar(usuario);
+				mensagem = "Usuário " + usuario.getNome() + " adicionado com sucesso.";
 				request.setAttribute("sucesso", mensagem);
 				listar(request, response);
+			} else if (id != null && !id.isEmpty()) {
+				if (usuarioDao.validarUpdate(login, Long.parseLong(id))) {
+					usuarioDao.atualizar(usuario);
+					mensagem = "Usuário " + usuario.getNome() + " editado com sucesso.";
+					request.setAttribute("sucesso", mensagem);
+					listar(request, response);
+				} else {
+					voltarFormUsuario(request, response, "ja-existe");
+				}
 			} else {
 				voltarFormUsuario(request, response, "ja-existe");
 			}

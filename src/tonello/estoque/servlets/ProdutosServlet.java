@@ -48,17 +48,21 @@ public class ProdutosServlet extends HttpServlet {
 					|| valor == null || valor.isEmpty()) {
 				voltarFormProduto(request, response, "null-input");
 			} else {
-				if (produtoDao.validar(produto.getNome())) {
-					String mensagem;
-					if (id == null || id.isEmpty()) {
-						produtoDao.adicionar(produto);
-						mensagem = "Produto " + produto.getNome() + " adicionado com sucesso.";
-					} else {
-						produtoDao.atualizar(produto);
-						mensagem = "Produto " + produto.getNome() + " editado com sucesso.";
-					}
+				String mensagem;
+				if (id == null || id.isEmpty() && produtoDao.validar(produto.getNome())) {
+					produtoDao.adicionar(produto);
+					mensagem = "Produto " + produto.getNome() + " adicionado com sucesso.";
 					request.setAttribute("sucesso", mensagem);
 					listar(request, response);
+				} else if (id != null && !id.isEmpty()) {
+					if (produtoDao.validarUpdate(nome, Long.parseLong(id))) {
+						produtoDao.atualizar(produto);
+						mensagem = "Produto " + produto.getNome() + " editado com sucesso.";
+						request.setAttribute("sucesso", mensagem);
+						listar(request, response);
+					} else {
+						voltarFormProduto(request, response, "ja-existe");
+					}
 				} else {
 					voltarFormProduto(request, response, "ja-existe");
 				}
