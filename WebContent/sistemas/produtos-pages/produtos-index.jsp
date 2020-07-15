@@ -13,7 +13,19 @@
 	<body>
 		<%@ include file="../../resources/layouts/cabecalho.jsp" %>
 		<div class="container">
-			<h1>Listagem de produtos</h1>
+			<form action="pesquisar" method="post">
+				<input hidden="hidden" type="text" name="tipo" value="produto" />
+				<div class="form-group">
+					<div class="row justify-content-center">
+						<div class="col-4">
+							<label for="produto-pesquisa">Pesquisar produto:</label>
+							<input class="form-control" id="produto-pesquisa" placeholder="Nome do produto..." type="text" name="pesquisa" />
+						</div>
+					</div>
+				</div>
+				<button class="btn btn-primary d-block mx-auto px-5" type="submit">Procurar</button>
+			</form>
+			<br />
 			<c:if test="${erro != null && !erro.isEmpty()}">
 				<div class="alert alert-danger">
 					${erro}
@@ -24,6 +36,7 @@
 					${sucesso}
 				</div>
 			</c:if>
+			<h1>Listagem de produtos</h1>
 			<table class="table table-hover table-bordered">
 				<thead>
 					<tr>

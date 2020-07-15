@@ -36,19 +36,19 @@
 				<input name="id" hidden="hidden" type="number" value="${produto.id}">
 				<div class="form-group">
 					<label for="nome">Nome: </label>
-					<input class="form-control" id="nome" name="nome" type="text" max="100" value="${produto.nome}" />
+					<input placeholder="Nome do produto..." class="form-control" id="nome" name="nome" type="text" max="100" value="${produto.nome}" />
 				</div>
 				<div class="form-group">
 					<label for="descricao">Descrição: </label>
-					<input class="form-control" id="descricao" name="descricao" type="text" max="255" value="${produto.descricao}" />
+					<input placeholder="Descrição do produto..." class="form-control" id="descricao" name="descricao" type="text" max="255" value="${produto.descricao}" />
 				</div>
 				<div class="form-group">
 					<label for="quantidade">Quantidade: </label>
-					<input class="form-control" id="quantidade" name="quantidade" type="text" value="${produto.quantidade}" />
+					<input placeholder="Quantidade do produto..." class="form-control" id="quantidade" name="quantidade" type="text" value="${produto.quantidade}" />
 				</div>
 				<div class="form-group">
 					<label for="valor">Valor: </label>
-					<input class="form-control" id="valor" name="valor" type="text" value="${produto.valor}" />
+					<input placeholder="Valor do produto..." class="form-control" id="valor" name="valor" type="text" value="${produto.valor}" />
 				</div>
 				<button class="btn btn-primary d-block mx-auto px-5" type="submit">Salvar produto</button>
 			</form>

@@ -33,15 +33,15 @@
 				<input name="id" hidden="hidden" type="number" value="${usuario.id}">
 				<div class="form-group">
 					<label for="nome">Nome: </label>
-					<input class="form-control" id="nome" name="nome" type="text" max="255" value="${usuario.nome}" />
+					<input placeholder="Nome do usuário..." class="form-control" id="nome" name="nome" type="text" max="255" value="${usuario.nome}" />
 				</div>
 				<div class="form-group">
 					<label for="login">Login: </label>
-					<input class="form-control" id="login" name="login" type="text" max="255" value="${usuario.login}" />
+					<input placeholder="Login do usuário..." class="form-control" id="login" name="login" type="text" max="255" value="${usuario.login}" />
 				</div>
 				<div class="form-group">
 					<label for="senha">Senha: </label>
-					<input class="form-control" id="senha" name="senha" type="password" max="255" value="${usuario.senha}" />
+					<input placeholder="Senha do usuário..." class="form-control" id="senha" name="senha" type="password" max="255" value="${usuario.senha}" />
 				</div>
 				<button class="btn btn-primary d-block mx-auto px-5" type="submit">Salvar usuário</button>
 			</form>
