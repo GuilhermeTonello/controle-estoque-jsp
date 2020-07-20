@@ -40,8 +40,12 @@ public class PesquisarServlet extends HttpServlet {
 	}
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+	protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+		String tipo = request.getParameter("tipo");
+		String pesquisa = request.getParameter("pesquisa");
+		if (tipo == null || tipo.isEmpty() || pesquisa == null || pesquisa.isEmpty()) {
+			resp.sendRedirect("produtos");
+		}
 	}
 
 }

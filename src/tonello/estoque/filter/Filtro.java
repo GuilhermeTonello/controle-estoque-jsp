@@ -18,7 +18,8 @@ import tonello.estoque.modelos.Usuario;
 
 @WebFilter(urlPatterns = {
 		"/layouts/*", "/sistemas/*",
-		"/produtos/*", "/usuarios/*"
+		"/produtos/*", "/usuarios/*",
+		"/pesquisar"
 })
 public class Filtro implements Filter {
 
